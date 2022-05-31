@@ -1,4 +1,4 @@
-package reusableMethods;
+package apiReusableMethods;
 
 import static io.restassured.RestAssured.given;
 

@@ -3,16 +3,16 @@ package assets;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import data.AssetsData;
+import apiData.AssetsData;
+import apiReusableMethods.GenerateTokens;
+import apiReusableMethods.Utility;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import reusableMethods.GenerateTokens;
-import reusableMethods.Utility;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
-public class AssetService extends GenerateTokens {
+public class FilterAssets extends GenerateTokens {
 	private static String token = generateLIA_DEV_Token();
 
 	private static Response httpRequest(String body) {
@@ -35,8 +35,8 @@ public class AssetService extends GenerateTokens {
 		String bodyJsonString = util.graphqlToJson(query);
 		Response httpReq = httpRequest(bodyJsonString);
 		httpReq.then().log().all().assertThat().statusCode(200).and()
-				.body("data.trucks.edges[0].node.serial", equalTo(truckReg)).and()
-				.body("data.trucks.edges.node", hasSize(1));
+				.body("apiData.trucks.edges[0].node.serial", equalTo(truckReg)).and()
+				.body("apiData.trucks.edges.node", hasSize(1));
 	}
 
 	@Test(dataProvider = "driverDetails", dataProviderClass = AssetsData.class)
@@ -48,8 +48,8 @@ public class AssetService extends GenerateTokens {
 		String bodyJsonString = util.graphqlToJson(query);
 		Response httpReq = httpRequest(bodyJsonString);
 		httpReq.then().log().all().assertThat().statusCode(200).and()
-				.body("data.drivers.edges[0].node.idNumber", equalTo(serial)).and()
-				.body("data.drivers.edges.node", hasSize(1));
+				.body("apiData.drivers.edges[0].node.idNumber", equalTo(serial)).and()
+				.body("apiData.drivers.edges.node", hasSize(1));
 	}
 
 	@Test(dataProvider = "trailerDetails", dataProviderClass = AssetsData.class)
@@ -61,8 +61,8 @@ public class AssetService extends GenerateTokens {
 		String bodyJsonString = util.graphqlToJson(query);
 		Response httpReq = httpRequest(bodyJsonString);
 		httpReq.then().log().all().assertThat().statusCode(200).and()
-				.body("data.trailers.edges[0].node.trailerReg", equalTo(trailerReg)).and()
-				.body("data.trailers.edges.node", hasSize(1));
+				.body("apiData.trailers.edges[0].node.trailerReg", equalTo(trailerReg)).and()
+				.body("apiData.trailers.edges.node", hasSize(1));
 	}
 
 	@Test(dataProvider = "countryOfOrigin", dataProviderClass = AssetsData.class)
@@ -73,7 +73,7 @@ public class AssetService extends GenerateTokens {
 		Utility util = new Utility();
 		String bodyJsonString = util.graphqlToJson(query);
 		Response httpReq = httpRequest(bodyJsonString);
-		httpReq.then().log().all().assertThat().statusCode(200).and().body("data.trucks.edges.node",
+		httpReq.then().log().all().assertThat().statusCode(200).and().body("apiData.trucks.edges.node",
 				hasItem(allOf(hasEntry(country, countValue))));
 	}
 
@@ -85,7 +85,7 @@ public class AssetService extends GenerateTokens {
 		Utility util = new Utility();
 		String bodyJsonString = util.graphqlToJson(query);
 		Response httpReq = httpRequest(bodyJsonString);
-		httpReq.then().log().all().assertThat().statusCode(200).and().body("data.drivers.edges.node",
+		httpReq.then().log().all().assertThat().statusCode(200).and().body("apiData.drivers.edges.node",
 				hasItem(allOf(hasEntry(country, countValue))));
 	}
 
@@ -97,7 +97,7 @@ public class AssetService extends GenerateTokens {
 		Utility util = new Utility();
 		String bodyJsonString = util.graphqlToJson(query);
 		Response httpReq = httpRequest(bodyJsonString);
-		httpReq.then().log().all().assertThat().statusCode(200).and().body("data.trailers.edges.node",
+		httpReq.then().log().all().assertThat().statusCode(200).and().body("apiData.trailers.edges.node",
 				hasItem(allOf(hasEntry(country, countValue))));
 	}
 }

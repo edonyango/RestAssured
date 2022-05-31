@@ -5,9 +5,10 @@ import static io.restassured.RestAssured.given;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import apiReusableMethods.GenerateTokens;
+import apiReusableMethods.Utility;
 import io.restassured.RestAssured;
-import reusableMethods.GenerateTokens;
-import reusableMethods.Utility;
+
 import static org.hamcrest.Matchers.*;
 
 public class Entities extends GenerateTokens {
@@ -41,7 +42,7 @@ public class Entities extends GenerateTokens {
 		String token = generateLIA_DEV_Token();
 		given().contentType("application/json").header("X-ASSETS-Authorization", token).body(jsBody).when()
 				.post().then().log().all().assertThat()
-				.statusCode(200).body("data.transporters.edges.node.accountManager.fullName", hasItem(allOf(equalTo(fullName))));
+				.statusCode(200).body("apiData.transporters.edges.node.accountManager.fullName", hasItem(allOf(equalTo(fullName))));
 	}
 	
 }
