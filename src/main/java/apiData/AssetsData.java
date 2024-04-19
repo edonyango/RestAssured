@@ -6,7 +6,7 @@ public class AssetsData {
 	
 	@DataProvider
 	public Object[][] trailerDetails() {
-		return new Object[][] { { "KHH007" }, { "ZZZ505" } };
+		return new Object[][] { { "KHH009" }, { "ZZZ505" } };
 	}
 
 	@DataProvider
@@ -16,7 +16,7 @@ public class AssetsData {
 
 	@DataProvider
 	public Object[][] countryOfOrigin() {
-		return new Object[][] { { "country", "KE" }, { "country", "UG" } };
+		return new Object[][] { { "country", "KE" }, { "country", "NG" } };
 	}
 
 	@DataProvider
